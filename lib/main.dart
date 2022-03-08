@@ -49,12 +49,13 @@ class ChangeMode extends StatefulWidget {
 class _ChangeModeState extends State<ChangeMode> {
   bool isDark = false;
   int numberOfCandies = 5;
+  int candiesSorted = 0;
   late List<CandieColor> candieList;
   @override
   void initState() {
     super.initState();
     candieList = List.generate(numberOfCandies, (index) {
-      return CandieColor();
+      return CandieColor(otherVariable: index);
     });
   }
 
@@ -82,27 +83,32 @@ class _ChangeModeState extends State<ChangeMode> {
       ),
       body: DragCandies(
           numberOfCandies: numberOfCandies,
+          candiesSorted: candiesSorted,
           addCandie: addCandie,
           candieList: candieList,
-          resetCandie: resetCandie),
+          resetCandie: resetCandie,
+          deleteCandie: deleteCandie),
     );
+  }
+
+  void deleteCandie(int index) {
+    setState(() {
+      candieList.removeAt(index);
+      //appres avoir remove faut rechanger dans dataCandie
+      numberOfCandies = candieList.length;
+    });
   }
 
   void addCandie() {
     setState(() {
       numberOfCandies++;
-      candieList.add(CandieColor());
+      candieList.add(CandieColor(otherVariable: candieList.length));
     });
   }
 
   void resetCandie() {
-    int i = 0;
-    int length = candieList.length;
     setState(() {
-      while (i < length) {
-        candieList.removeLast();
-        i++;
-      }
+      candieList.clear();
       numberOfCandies = candieList.length;
     });
   }

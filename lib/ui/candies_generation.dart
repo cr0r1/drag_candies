@@ -1,37 +1,52 @@
+import 'package:drag_candies/model/candies_object.dart';
 import 'package:drag_candies/ui/candie_form.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
 class CandiesGeneration extends StatefulWidget {
-  const CandiesGeneration({Key? key, required this.color}) : super(key: key);
-  final int color;
+  const CandiesGeneration({Key? key, required this.candieData})
+      : super(key: key);
+  // final int color;
+  final CandieColor candieData;
   @override
   State<CandiesGeneration> createState() => _CandiesGenerationState();
 }
 
 class _CandiesGenerationState extends State<CandiesGeneration> {
-  double top = generateRandomTop();
-  double right = generateRandom();
-  //1 to 5
+  bool move = false;
+  //1 to 6 inclu
+
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      top: ((MediaQuery.of(context).size.height -
-                  MediaQuery.of(context).padding.top -
-                  kToolbarHeight) /
-              2) *
-          top,
-      right: MediaQuery.of(context).size.width * right,
-      // left: MediaQuery.of(context).size.width * right,
+    double top = ((MediaQuery.of(context).size.height -
+                MediaQuery.of(context).padding.top -
+                kToolbarHeight) /
+            2) *
+        generateRandomTop();
+
+    double right = MediaQuery.of(context).size.width * generateRandom();
+    return AnimatedPositioned(
+      curve: Curves.slowMiddle,
+      duration: const Duration(seconds: 3),
+      top: move ? top : top,
+      right: move ? right : right,
       child: Transform.rotate(
         angle: pi * top / right,
         child: Draggable(
-            data: widget.color,
-            feedback: CandyForm(
-              color: widget.color,
-            ),
-            childWhenDragging: const CandyForm(color: 0),
-            child: CandyForm(color: widget.color)),
+          data: widget.candieData,
+          feedback: CandyForm(
+            color: widget.candieData.color,
+          ),
+          childWhenDragging: Container(),
+          child: GestureDetector(
+            child: CandyForm(color: widget.candieData.color),
+            onTap: () {
+              setState(() {
+                move = !move;
+              });
+            },
+          ),
+        ),
       ),
     );
   }
