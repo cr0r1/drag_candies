@@ -6,15 +6,16 @@ import 'package:flutter/material.dart';
 import 'buttons.dart';
 
 class DragCandies extends StatefulWidget {
-  const DragCandies(
-      {Key? key,
-      required this.numberOfCandies,
-      required this.candiesSorted,
-      required this.addCandie,
-      required this.resetCandie,
-      required this.deleteCandie,
-      required this.candieList})
-      : super(key: key);
+  const DragCandies({
+    Key? key,
+    required this.numberOfCandies,
+    required this.candiesSorted,
+    required this.addCandie,
+    required this.resetCandie,
+    required this.deleteCandie,
+    required this.candieList,
+    required this.song,
+  }) : super(key: key);
 
   final int numberOfCandies;
   final int candiesSorted;
@@ -22,6 +23,7 @@ class DragCandies extends StatefulWidget {
   final Function() resetCandie;
   final Function(int index) deleteCandie;
   final List<CandieColor> candieList;
+  final bool song;
 
   @override
   State<DragCandies> createState() => _DragCandiesState();
@@ -70,6 +72,7 @@ class _DragCandiesState extends State<DragCandies> {
                 addCandie: widget.addCandie,
                 deleteCandie: widget.deleteCandie,
                 candieList: widget.candieList,
+                song: widget.song,
               ),
             ),
           ],

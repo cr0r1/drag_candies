@@ -9,11 +9,14 @@ class Bolws extends StatefulWidget {
       {Key? key,
       required this.deleteCandie,
       required this.addCandie,
+      required this.song,
       required this.candieList})
       : super(key: key);
+
   final Function(int index) deleteCandie;
   final List<CandieColor> candieList;
   final Function() addCandie;
+  final bool song;
 
   @override
   State<Bolws> createState() => _BolwsState();
@@ -32,6 +35,7 @@ class _BolwsState extends State<Bolws> {
           ColorsP(
               color: 1,
               container: BowlForm(
+                song: widget.song,
                 addCandie: widget.addCandie,
                 candieList: widget.candieList,
                 deleteCandie: widget.deleteCandie,
@@ -40,6 +44,7 @@ class _BolwsState extends State<Bolws> {
           ColorsP(
               color: 2,
               container: BowlForm(
+                song: widget.song,
                 addCandie: widget.addCandie,
                 candieList: widget.candieList,
                 deleteCandie: widget.deleteCandie,
@@ -48,6 +53,7 @@ class _BolwsState extends State<Bolws> {
           ColorsP(
               color: 3,
               container: BowlForm(
+                song: widget.song,
                 addCandie: widget.addCandie,
                 candieList: widget.candieList,
                 deleteCandie: widget.deleteCandie,
@@ -56,6 +62,7 @@ class _BolwsState extends State<Bolws> {
           ColorsP(
               color: 4,
               container: BowlForm(
+                song: widget.song,
                 addCandie: widget.addCandie,
                 candieList: widget.candieList,
                 deleteCandie: widget.deleteCandie,
@@ -64,6 +71,7 @@ class _BolwsState extends State<Bolws> {
           ColorsP(
               color: 5,
               container: BowlForm(
+                song: widget.song,
                 addCandie: widget.addCandie,
                 candieList: widget.candieList,
                 deleteCandie: widget.deleteCandie,
@@ -81,19 +89,19 @@ class BowlForm extends StatefulWidget {
       required this.color,
       required this.deleteCandie,
       required this.addCandie,
-      required this.candieList})
+      required this.candieList,
+      required this.song})
       : super(key: key);
   final int color;
   final Function(int index) deleteCandie;
   final Function() addCandie;
   final List<CandieColor> candieList;
-
+  final bool song;
   @override
   State<BowlForm> createState() => _BowlFormState();
 }
 
 class _BowlFormState extends State<BowlForm> {
-  bool song = true;
   AudioCache player = AudioCache();
   @override
   Widget build(BuildContext context) {
@@ -110,12 +118,15 @@ class _BowlFormState extends State<BowlForm> {
           }
           debugPrint(
               "The color is ${data.color} --- Remove the ${data.otherVariable} candy and we are good");
+          if (widget.song) {
+            playSongGood();
+          }
         } else {
           widget.addCandie();
           widget.addCandie();
-        }
-        if (song) {
-          playSong();
+          if (widget.song) {
+            playSongBad();
+          }
         }
         playHaptic();
       },
@@ -125,8 +136,12 @@ class _BowlFormState extends State<BowlForm> {
     );
   }
 
-  Future<AudioPlayer> playSong() async {
+  Future<AudioPlayer> playSongGood() async {
     return await player.play("./audio/bubblemp3.mp3");
+  }
+
+  Future<AudioPlayer> playSongBad() async {
+    return await player.play("./audio/caillou.mp3");
   }
 
   Widget bowlForm() {

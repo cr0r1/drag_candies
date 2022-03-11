@@ -26,8 +26,8 @@ class _CandiesGenerationState extends State<CandiesGeneration> {
 
     double right = MediaQuery.of(context).size.width * generateRandom();
     return AnimatedPositioned(
-      curve: Curves.slowMiddle,
-      duration: const Duration(seconds: 3),
+      curve: Curves.ease,
+      duration: const Duration(seconds: 15),
       top: move ? top : top,
       right: move ? right : right,
       child: Transform.rotate(

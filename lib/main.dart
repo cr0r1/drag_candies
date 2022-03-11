@@ -48,8 +48,9 @@ class ChangeMode extends StatefulWidget {
 
 class _ChangeModeState extends State<ChangeMode> {
   bool isDark = false;
-  int numberOfCandies = 5;
+  int numberOfCandies = 17;
   int candiesSorted = 0;
+  bool song = true;
   late List<CandieColor> candieList;
   @override
   void initState() {
@@ -79,11 +80,15 @@ class _ChangeModeState extends State<ChangeMode> {
               child: Icon(
                 isDark ? Icons.sunny : Icons.mode_night_outlined,
               )),
+          ElevatedButton(
+              onPressed: () => muteSong(),
+              child: Icon(song ? Icons.music_note : Icons.music_off_rounded))
         ],
       ),
       body: DragCandies(
           numberOfCandies: numberOfCandies,
           candiesSorted: candiesSorted,
+          song: song,
           addCandie: addCandie,
           candieList: candieList,
           resetCandie: resetCandie,
@@ -91,11 +96,18 @@ class _ChangeModeState extends State<ChangeMode> {
     );
   }
 
+  void muteSong() {
+    setState(() {
+      song = !song;
+    });
+  }
+
   void deleteCandie(int index) {
     setState(() {
       candieList.removeAt(index);
       //appres avoir remove faut rechanger dans dataCandie
       numberOfCandies = candieList.length;
+      candiesSorted++;
     });
   }
 
