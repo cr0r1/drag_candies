@@ -55,7 +55,7 @@ class _DragCandiesState extends State<DragCandies> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               "${widget.candiesSorted}",
-              style: const TextStyle(fontSize: 52, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 80, fontWeight: FontWeight.bold),
             ),
           ),
         ),
