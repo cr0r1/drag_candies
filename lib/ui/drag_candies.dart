@@ -50,22 +50,22 @@ class _DragCandiesState extends State<DragCandies> {
           ],
         ),
         Align(
-          alignment: Alignment.topCenter,
+          alignment: Alignment.center,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
               "${widget.candiesSorted}",
-              style: const TextStyle(fontSize: 30),
+              style: const TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
             ),
           ),
         ),
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Buttons(
-              addCandie: widget.addCandie,
-              resetCandie: widget.resetCandie,
-            ),
+            // Buttons(
+            //   addCandie: widget.addCandie,
+            //   resetCandie: widget.resetCandie,
+            // ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Bolws(
